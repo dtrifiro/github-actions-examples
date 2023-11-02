@@ -19,33 +19,25 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python }}
-        uses: actions/setup-python@v4.6.1
-        with:
-          python-version: ${{ matrix.python }}
-
-      - name: build
+      - name: docker pull python image
         run: |
-          mkdir build
-          python --version > build/artifact_${{ matrix.python }}.txt
+          docker pull python:${{matrix.python}}-slim
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: built_package
-          path: build
-
-  process_artifacts:
-    runs-on: ubuntu-latest
-    needs: job_name
-    steps:
-      - name: download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: built_package
-          path: artifacts_directory
-
-      - name: print artifacts
+      - name: docker pull from quay
         run: |
-          find artifacts_directory
-          find artifacts_directory -exec cat {} \;
+          docker run python:${{matrix.python}}-slim python --version
+
+  # process_artifacts:
+  #   runs-on: ubuntu-latest
+  #   needs: job_name
+  #   steps:
+  #     - name: download artifacts
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: built_package
+  #         path: artifacts_directory
+
+  #     - name: print artifacts
+  #       run: |
+  #         find artifacts_directory
+  #         find artifacts_directory -exec cat {} \;
