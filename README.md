@@ -4,6 +4,8 @@ Just a few examples with GitHub actions.
 
 Check out the git history for more information
 
+[![example](https://github.com/dtrifiro/github-actions-examples/actions/workflows/tests.yml/badge.svg)](https://github.com/dtrifiro/github-actions-examples/actions/workflows/tests.yml)
+
 ## References
 
 - [guide](https://docs.github.com/en/actions/guides)
