@@ -23,9 +23,20 @@ jobs:
         run: |
           docker pull python:${{matrix.python}}-slim
 
-      - name: docker pull from quay
+      - name: docker run
         run: |
           docker run python:${{matrix.python}}-slim python --version
+
+      - name: docker login to quay
+        run: |
+          docker login --username ${{ secrets.QUAY_USERNAME }} --password ${{ secrets.QUAY_TOKEN }} quay.io
+
+      - name: docker push to quay
+        run: |
+          original_tag="python:${{matrix.python}}-slim"
+          new_tag="quay.io/dtrifiro/python:${{matrix.python}}-slim"
+          docker tag ${original_tag} ${new_tag}
+          docker push ${new_tag}
 
   # process_artifacts:
   #   runs-on: ubuntu-latest
