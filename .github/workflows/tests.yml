@@ -13,6 +13,11 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: echo hello world
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4.6.1
+        with:
+          python-version: 3.11
+
+      - name: print python version
         run: |
-          echo "hello world"
+          python --version
